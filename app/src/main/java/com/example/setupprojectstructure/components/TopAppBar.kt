@@ -1,7 +1,9 @@
 package com.example.setupprojectstructure.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,12 +33,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.setupprojectstructure.R
+import com.example.setupprojectstructure.viewModel.ActionDetailViewModel
 import com.lightspark.composeqr.QrCodeView
 
 @Composable
-fun TopBar(){
-    var isDialogOpen by remember { mutableStateOf(false) }
+fun TopBar(actionDetailViewModel: ActionDetailViewModel = viewModel()){
+    val isDialogOpen by actionDetailViewModel.isDialogOpen
    Row (modifier = Modifier
        .fillMaxWidth()
        .height(70.dp),
@@ -47,19 +51,28 @@ fun TopBar(){
                .weight(1f)
        ) {
            Row (modifier = Modifier.fillMaxWidth(),
-               horizontalArrangement = Arrangement.SpaceBetween) {
-               Box(modifier = Modifier
-                   .size(50.dp)
-                   .clip(CircleShape)
-               ){
-                    Image(painter = painterResource(id = R.drawable.logo), contentDescription = "profile User",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize())
+               horizontalArrangement = Arrangement.Start) {
+               Box(
+                   modifier = Modifier
+                       .size(50.dp)
+                       .clip(CircleShape)
+                       .border(BorderStroke(2.dp, Color.White), shape = CircleShape),
+                   contentAlignment = Alignment.Center
+               ) {
+                   Image(
+                       painter = painterResource(id = R.drawable.logo),
+                       contentDescription = "Profile User",
+                       contentScale = ContentScale.Crop,
+                       modifier = Modifier
+                           .fillMaxSize()
+                           .clip(CircleShape)
+                   )
                }
+               Spacer(modifier = Modifier.width(10.dp))
                Box(modifier = Modifier){
                   Column {
-                      Text(text = "Hello, Chin Kosal", fontSize = 16.sp , color = Color.White)
-                      Text(text = "View Profile", fontSize = 14.sp,  color = Color.White)
+                      Text(text = "Hello, Chin Kosal", fontSize = 14.sp , color = Color.White)
+                      Text(text = "View Profile", fontSize = 12.sp,  color = Color.White)
                   }
                }
            }
@@ -86,7 +99,7 @@ fun TopBar(){
                    .size(25.dp)
                    .clip(CircleShape)
                    .background(Color.Yellow)
-                   .clickable { isDialogOpen = true }){
+                   .clickable { actionDetailViewModel.openDialog() }){
                    // QR code
                     Image(painter = painterResource(id = R.drawable.ic_bk), contentDescription = null,
                         modifier = Modifier.size(25.dp)
@@ -99,7 +112,7 @@ fun TopBar(){
     // call alert dialog QR code
     if (isDialogOpen) {
         AlertQRCode(onDismiss = {
-            isDialogOpen = false
+           actionDetailViewModel.closeDialog()
         }
         )
     }

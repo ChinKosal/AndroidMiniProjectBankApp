@@ -26,7 +26,7 @@ fun ButtonComponent(name: String, onClick: () -> Unit) {
             color = Color.Black,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(horizontal = 5.dp, vertical = 5.dp)
+            modifier = Modifier.padding(horizontal = 0.dp, vertical = 2.dp)
         )
     }
 }

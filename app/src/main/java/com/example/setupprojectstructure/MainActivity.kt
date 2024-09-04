@@ -6,12 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.collection.scatterSetOf
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Scaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -39,22 +41,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SetUpProjectStructureTheme {
-                SetBarColor(color = MaterialTheme.colorScheme.background)
+                val contentColor = Color(0xFF0D47A1)
+                // Set the system bar color to match the content background
+                SetBarColor(color = contentColor)
+
                 Surface(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    color = Color(0xFF0D47A1)
+                    modifier = Modifier.fillMaxSize(),
+                    color = contentColor
                 ) {
                     // Call the home screen composable
-                    homeScreen()
+                    HomeScreen()
                 }
             }
         }
     }
 
-    // function for system color
+    // Function to set the system bar color
     @Composable
-    private fun  SetBarColor(color: Color) {
+    private fun SetBarColor(color: Color) {
         val systemUiController = rememberSystemUiController()
         SideEffect {
             systemUiController.setSystemBarsColor(
@@ -64,27 +68,30 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// home screen activity
+// Home screen composable
 @Composable
-fun homeScreen(){
-    Column (modifier = Modifier
-        .fillMaxSize()
-    ) {
-       Column (modifier = Modifier  .padding(start = 10.dp, end = 10.dp)){
-           TopBar()
-           Spacer(modifier = Modifier.height(10.dp))
-           CardSection()
-           Spacer(modifier = Modifier.height(10.dp))
-           CardItem()
-           Spacer(modifier = Modifier.height(10.dp))
-           SwiperSection()
-           Spacer(modifier = Modifier.height(10.dp))
-       }
-       Column (modifier = Modifier.fillMaxSize()){
-           BottomSheetsEditHome()
-       }
+fun HomeScreen() {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        item {
+            Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
+                TopBar()
+                Spacer(modifier = Modifier.height(10.dp))
+                CardSection()
+                Spacer(modifier = Modifier.height(10.dp))
+                CardItem()
+                Spacer(modifier = Modifier.height(10.dp))
+                SwiperSection()
+                Spacer(modifier = Modifier.height(15.dp))
+            }
+            Column(modifier = Modifier.fillMaxSize()) {
+                BottomSheetsEditHome()
+            }
+        }
     }
 }
+
+
+
 
 
 

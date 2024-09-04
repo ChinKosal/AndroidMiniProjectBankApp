@@ -73,7 +73,7 @@ fun CardItem() {
     Box(
         modifier = Modifier
             .border(BorderStroke(3.dp, brush), shape = RoundedCornerShape(20.dp))
-            .fillMaxWidth()
+            .fillMaxWidth().height(220.dp)
             .padding(16.dp)
     ) {
        LazyVerticalGrid(columns = GridCells.Fixed(3),
@@ -85,12 +85,12 @@ fun CardItem() {
        ) {
            items(cardsList) { card ->
                Card (modifier = Modifier
-                   .fillMaxWidth().clip(RoundedCornerShape(25.dp))
+                   .fillMaxWidth().clip(RoundedCornerShape(16.dp))
                    .size(90.dp)) {
                    Column(
                        modifier = Modifier
                            .padding(0.dp)
-                           .fillMaxSize() // Ensure column fills card space
+                           .fillMaxSize()
                    ) {
                        Box(
                            modifier = Modifier
@@ -101,18 +101,18 @@ fun CardItem() {
                            Image(
                                painter = card.iconCard,
                                contentDescription = card.cardName,
-                               modifier = Modifier.size(22.dp)
+                               modifier = Modifier.size(23.dp)
                            )
                        }
-                      Column (modifier = Modifier.padding(horizontal = 10.dp)){
+                      Column (modifier = Modifier.padding(horizontal = 10.dp, vertical = 0.dp)){
                           Text(
                               text = card.cardName,
                               fontSize = 14.sp,
-                              fontWeight = FontWeight.SemiBold
+                              fontWeight = FontWeight.SemiBold,
                           )
                           Text(
                               text = card.descriptionCard,
-                              fontSize = 10.sp
+                              fontSize = 11.sp,
                           )
                       }
                    }
